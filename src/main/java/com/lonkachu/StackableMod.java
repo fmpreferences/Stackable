@@ -13,9 +13,10 @@ public class StackableMod implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("stackable");
 
-    public static final int MAX_STACK = 127;
+    public static final int MAX_STACK = 2147483647;
+    public static final int DEFAULT_STACK = 127;
 
-    private static int maxStack = 127;
+    private static int maxStack = -1;
 
     @Override
     public void onInitialize() {
@@ -39,8 +40,23 @@ public class StackableMod implements ModInitializer {
         }
         test t = new test();
         t.logStackSize();
+        LOGGER.info("Configured to: " + maxStack);
     }
 
-    public static int getMaxStackCount() { return maxStack; }
+    public static int getMaxStackCount()
+    {
+        if(maxStack == -1) //if we call getMax before we have initalized everything, read the config
+        {
+            Config config;
+            try {
+                config = configLoader.bootstrapConfig();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            maxStack = config.getMaxStackSize();
+        }
+        return maxStack;
+    }
 
 }

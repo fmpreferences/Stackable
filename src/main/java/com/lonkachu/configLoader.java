@@ -29,10 +29,10 @@ public class configLoader {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         //gson.fieldNamingStrategy();
-        FileWriter writer = new FileWriter("Stackable.json");
+        FileWriter writer = new FileWriter("config/Stackable.json");
 
         //int maxStack = StackableMod.MAX_STACK;
-        Config config = new Config(StackableMod.MAX_STACK);
+        Config config = new Config(StackableMod.DEFAULT_STACK);
 
 
         writer.write(gson.toJson(config));
@@ -44,7 +44,7 @@ public class configLoader {
     private static Config configReader() throws FileNotFoundException {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
-        BufferedReader br = new BufferedReader(new FileReader("Stackable.json"));
+        BufferedReader br = new BufferedReader(new FileReader("config/Stackable.json"));
 
         Config c = gson.fromJson(br, Config.class);
         return c;

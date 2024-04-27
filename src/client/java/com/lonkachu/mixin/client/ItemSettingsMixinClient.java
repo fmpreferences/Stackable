@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemSettingsMixinClient {
 
 
-    @Shadow int maxCount;
-    @Inject(at = @At("TAIL"), method = "<init>")
-    private void init(CallbackInfo ci) {
-        // This code is injected into the start of MinecraftServer.loadWorld()V
-        this.maxCount = StackableMod.getMaxStackCount();
-        //ExampleMod.LOGGER.info("Hello Mixin world!");
-    }
-
+//    @Shadow int maxCount;
+//    @Inject(at = @At("TAIL"), method = "<init>")
+//    private void init(CallbackInfo ci) {
+//        // This code is injected into the start of MinecraftServer.loadWorld()V
+//        this.maxCount = StackableMod.getMaxStackCount();
+//        //ExampleMod.LOGGER.info("Hello Mixin world!");
+//    }
+//
 
 }

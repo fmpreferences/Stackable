@@ -32,13 +32,13 @@ public abstract class ServerPlayNetworkDesyncFixMixin implements ServerPlayPacke
 
     @Inject(method = "onCreativeInventoryAction", at = @At ("TAIL"))
     public void onCreativeInventoryAction(CreativeInventoryActionC2SPacket packet, CallbackInfo ci) {
-        ItemStack itemStack = packet.getStack();
-        boolean slotIsPositive = packet.getSlot() < 0;
+        ItemStack itemStack = packet.stack();
+        boolean slotIsPositive = packet.slot() < 0;
         boolean isValid = itemStack.isEmpty() || itemStack.getDamage() >= 0 && itemStack.getCount() <= itemStack.getMaxCount() && !itemStack.isEmpty();
-        boolean bl2 = packet.getSlot() >= 1 && packet.getSlot() <= 45; //I'm not smart enough to understand exactly what this code does,
+        boolean bl2 = packet.slot() >= 1 && packet.slot() <= 45; //I'm not smart enough to understand exactly what this code does,
 
         if(isValid && bl2) {
-            this.player.playerScreenHandler.getSlot(packet.getSlot()).setStack(itemStack);
+            this.player.playerScreenHandler.getSlot(packet.slot()).setStack(itemStack);
             this.player.playerScreenHandler.sendContentUpdates();
         } else if(slotIsPositive && isValid && this.creativeItemDropThreshold < 200) {
             this.creativeItemDropThreshold += 20;

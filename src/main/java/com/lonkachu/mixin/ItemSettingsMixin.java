@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ItemSettingsMixin {
 
 
-	@Shadow int maxCount;
-	@Inject(at = @At("TAIL"), method = "<init>")
-	private void init(CallbackInfo ci) {
-
-		this.maxCount = StackableMod.getMaxStackCount();
-
-	}
+//	@Shadow int maxCount;
+//	@Inject(at = @At("TAIL"), method = "<init>")
+//	private void init(CallbackInfo ci) {
+//
+//		this.maxCount = StackableMod.getMaxStackCount();
+//
+//	}
 
 
 }

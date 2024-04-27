@@ -20,8 +20,5 @@ public interface InventoryStackMixin extends Clearable {
         return StackableMod.getMaxStackCount();
     }
 
-    @Shadow
-    int MAX_COUNT_PER_STACK = StackableMod.getMaxStackCount();
-
 
 }
