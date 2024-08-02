@@ -1,6 +1,7 @@
 package com.lonkachu.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.lonkachu.StackableMod;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.util.Clearable;
@@ -23,12 +24,20 @@ public interface InventoryStackMixin extends Clearable {
      * This rewrite is to stop us from requiring overwrites and inject and early returns that are ultimately bad for
      * mod compatibility.
      */
-    @ModifyConstant(
-            method = "getMaxCountPerStack",
-            constant = @Constant(intValue = 99)
-    )
-    default int getMaxCountPerStack(int constant) {
-        return StackableMod.getMaxStackCount();
+
+    // 1.2.2 - Lonk - This rewrite allows multiple mods to inject into this without throwing an error.
+    @ModifyReturnValue
+            (
+                    method = "getMaxCountPerStack",
+                    at = @At("RETURN")
+            )
+    default int getMaxCountPerStack(int constant)
+    {
+        if (constant != 99)
+        {
+            return constant;
+        }
+        return StackableMod.getMaxStackCount(); //We ignore the original, we could do a check to ensure it was 64, however, this should always be 64, this is the base case.
     }
 
 

@@ -2,6 +2,7 @@ package com.lonkachu.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.lonkachu.StackableMod;
+import com.mojang.serialization.Codec;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,14 +18,14 @@ tbh, it doesn't massively impact how people
  */
 @Mixin(ItemStack.class)
 public class ItemStackFixin {
-    @ModifyConstant
+    //1.2.2 - This is a lot cleaner and less crash prone. This was done to fix an issue with kubeJS, it might be worth making a PR for them since this should achieve the same effect and prevent other mods from crashing.
+    @ModifyExpressionValue
             (
                     method = "method_57371", //This method is a Lambda, they aren't funda.
-                    constant = @Constant(intValue = 99)
-
+                    at = @At(value = "INVOKE", target = "Lnet/minecraft/util/dynamic/Codecs;rangedInt(II)Lcom/mojang/serialization/Codec;")
             )
-
-    private static int getMaxCountPerStack(int constant) {
-        return StackableMod.getMaxStackCount();
+    private static Codec<Integer> replaceCodec(Codec<Integer> original)
+    {
+        return Codec.intRange(0, StackableMod.getMaxStackCount());
     }
 }
