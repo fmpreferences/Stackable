@@ -2,6 +2,15 @@ package com.lonkachu;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
+import net.minecraft.component.ComponentType;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +23,7 @@ public class StackableMod implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("stackable");
 
     public static final int MAX_STACK = 2147483647;
-    public static final int DEFAULT_STACK = 127;
+    public static final int DEFAULT_STACK = 128;
 
     private static int maxStack = -1;
 
@@ -37,6 +46,33 @@ public class StackableMod implements ModInitializer {
         test t = new test();
         t.logStackSize();
         LOGGER.info("Configured to: " + maxStack);
+
+
+
+        for(StacksizeOverride override : config.GetOverrides())
+        {
+            Item item = Registries.ITEM.get(override.GetIdentifier());
+
+            DefaultItemComponentEvents.MODIFY.register(modifyContext ->
+                    {
+                        modifyContext.modify(item, builder ->
+                                {
+                                    builder.add(DataComponentTypes.MAX_STACK_SIZE, override.GetCount());
+                                }
+                        );
+                    }
+            );
+        }
+
+
+
+//        ItemEnchantmentsComponent.MODIFY.register(context ->
+//        {
+//            context.modify(Items.DIAMOND_PICKAXE, builder ->
+//            {
+//                builder.set
+//            });
+//        });
     }
 
     public static int getMaxStackCount()
