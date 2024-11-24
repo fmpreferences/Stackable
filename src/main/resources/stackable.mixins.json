@@ -3,6 +3,7 @@
 	"package": "com.lonkachu.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"BundleItemMixin",
 		"DataComponentTypesFixin",
 		"InventoryStackMixin",
 		"ItemEntityMixin",
