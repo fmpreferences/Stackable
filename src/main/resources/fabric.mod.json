@@ -3,7 +3,7 @@
 	"id": "stackable",
 	"version": "${version}",
 	"name": "Stackable",
-	"description": "# Stackable\n\nStackable is a mod that increases all block stacking limits to any value less than 127 for minecraft 1.19.4.",
+	"description": "# Stackable\n\nStackable is a mod that increases all block stacking limits to any value less than 2.147B for minecraft 1.21",
 	"authors": [
 		"Lonkachu"
 	],
@@ -19,7 +19,7 @@
 			"com.lonkachu.StackableMod"
 		],
 		"client": [
-			"com.lonkachu.ExampleModClient"
+
 		]
 	},
 	"mixins": [
