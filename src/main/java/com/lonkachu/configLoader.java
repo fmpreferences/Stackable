@@ -41,12 +41,16 @@ public class configLoader {
         return config;
     }
 
-    private static Config configReader() throws FileNotFoundException {
+    private static Config configReader() throws IOException {
         GsonBuilder b = new GsonBuilder();
         Gson gson = b.create();
         BufferedReader br = new BufferedReader(new FileReader("config/Stackable.json"));
 
         Config c = gson.fromJson(br, Config.class);
+        if (c.GetOverrides() == null)
+        {
+            c = configWriter();
+        }
         return c;
     }
 }
